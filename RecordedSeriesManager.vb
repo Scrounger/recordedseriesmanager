@@ -53,7 +53,7 @@ Namespace TvEngine
         ''' </summary>
         Public ReadOnly Property Version() As String Implements ITvServerPlugin.Version
             Get
-                Return "0.3.1.6"
+                Return "0.7.1.6"
             End Get
         End Property
 
@@ -234,7 +234,7 @@ Namespace TvEngine
             For i = 0 To recordingList.Count - 1
 
                 '!!!!!!!! Replace muss raus !!!!
-                Dim _filenameDB As String = Replace(recordingList(i).FileName, "D:\", "\\10.0.1.2\")
+                Dim _filenameDB As String = recordingList(i).FileName
 
 
                 If InStr(_filenameDB, Replace(Replace(Replace(Replace(_layer.GetSetting("seriesformat").Value, _

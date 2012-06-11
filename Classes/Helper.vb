@@ -29,7 +29,7 @@ Public Class Helper
         Get
             '!!!!!!!! Replace muss raus !!!!
             Dim _folder As IList(Of Card) = Card.ListAll
-            Return Replace(_folder(0).RecordingFolder, "D:\", "\\10.0.1.2\")
+            Return _folder(0).RecordingFolder
 
         End Get
     End Property
@@ -49,7 +49,7 @@ Public Class Helper
         MyLog.Debug("{0}move video file... ({1} -> {2})", LogPrefix, sourceFilename, filename)
 
         If Helper.TestMode = False Then
-            'File.Move(sourcePath, path)
+            File.Move(sourceFilename, filename)
         End If
 
 
@@ -57,20 +57,18 @@ Public Class Helper
 
             'recording database path updaten
             If Helper.TestMode = False Then
-                'rec.FileName = path
-                'rec.Persist()
+                rec.FileName = filename
+                rec.Persist()
             End If
             MyLog.Debug("{0}recording table updated...", LogPrefix)
         Else
 
             'delete recording database entry
             If Helper.TestMode = False Then
-                'rec.delete
+                rec.Delete()
             End If
             MyLog.Debug("{0}delete recording database entry...", LogPrefix)
         End If
-
-        '_counter = _counter + 1
 
         'alle weiteren dateien kopieren z.B. *.xml, *.jpg, comskip files
         For Each Datei As String In My.Computer.FileSystem.GetFiles(_directory, FileIO.SearchOption.SearchTopLevelOnly, IO.Path.GetFileNameWithoutExtension(sourceFilename) & ".*")
@@ -84,7 +82,7 @@ Public Class Helper
             Try
                 MyLog.Debug("{0}move {1} file... ({2} -> {3})", LogPrefix, IO.Path.GetExtension(Datei), sourceFilename, filename)
                 If Helper.TestMode = False Then
-                    'File.Move(Datei, _newFilename)
+                    File.Move(Datei, _newFilename)
                 End If
             Catch exMoveOtherFiles As Exception
                 MyLog.Error("{0}error: {1}, stack: {2}", LogPrefix, exMoveOtherFiles.Message, exMoveOtherFiles.StackTrace)
@@ -101,12 +99,12 @@ Public Class Helper
 
         MyLog.Debug("existing file handler: delete video file... ({0})", filename)
         If Helper.TestMode = False Then
-            'File.Delete(filename)
+            File.Delete(filename)
         End If
 
         'delete recording database entry
         If Helper.TestMode = False Then
-            'rec.Delete
+            rec.Delete()
         End If
 
         MyLog.Debug("existing file handler: delete recording database entry...")
@@ -117,7 +115,7 @@ Public Class Helper
             Try
                 MyLog.Debug("existing file handler: delete {0} file... ({1})", Path.GetExtension(Datei), Datei)
                 If Helper.TestMode = False Then
-                    'File.Delete(Datei)
+                    File.Delete(Datei)
                 End If
             Catch exDeleteOtherFiles As Exception
                 MyLog.Error("existing file handler: error: {0}, stack: {1}", exDeleteOtherFiles.Message, exDeleteOtherFiles.StackTrace)
