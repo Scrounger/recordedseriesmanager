@@ -213,14 +213,14 @@ Click Next to continue or Cancel to exit Setup.</Value>
       <Major>0</Major>
       <Minor>7</Minor>
       <Build>1</Build>
-      <Revision>7</Revision>
+      <Revision>8</Revision>
     </Version>
     <ExtensionDescription>RecordedSeriesManager is a TvServer plugin for MediaPortal.
 
 RecordedSeriesManager monitors changes of your recorded series (= records with season- and episodenumber !!!). If it find changes, the plugin checks, if the recorded series filename has the correct series formating rule (like you have configured in the TvServer Configuration). The plugin will correct the filename and store the changes in your records database. The plugin will also found duplicated recorded series, because they have also a filename with wrong series formating rule.
 The plugin offers additionally an existing file handler, where you can configure what happens if a file with correct series formating rule still exist. </ExtensionDescription>
-    <VersionDescription>== Version 0.7.1.7 beta ==
-  * background timer bug fixed</VersionDescription>
+    <VersionDescription>== Version 0.7.1.8 beta ==
+  * MoveRecording wrong filename bug fixed</VersionDescription>
     <DevelopmentStatus>Beta</DevelopmentStatus>
     <OnlineLocation>http://recordedseriesmanager.googlecode.com/files/RecordedSeriesManager_v.0.7.1.7.beta.mpe1</OnlineLocation>
     <ReleaseDate>2012-06-11T15:09:56.6977248+02:00</ReleaseDate>

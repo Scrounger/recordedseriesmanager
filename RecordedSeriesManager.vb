@@ -54,7 +54,7 @@ Namespace TvEngine
         ''' </summary>
         Public ReadOnly Property Version() As String Implements ITvServerPlugin.Version
             Get
-                Return "0.7.1.7"
+                Return "0.7.1.8"
             End Get
         End Property
 
@@ -305,9 +305,9 @@ Namespace TvEngine
                             End If
 
                             If _handle = "folder" Then
-                                MyLog.Debug("existing file handler: atcion: {0} -> {1}", _handle, _MoveFolder)
+                                MyLog.Debug("existing file handler: action: {0} -> {1}", _handle, _MoveFolder)
                             Else
-                                MyLog.Debug("existing file handler: atcion: {0}", _handle)
+                                MyLog.Debug("existing file handler: action: {0}", _handle)
                             End If
 
                             Select Case (_handle)

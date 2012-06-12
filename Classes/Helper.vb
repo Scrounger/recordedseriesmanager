@@ -52,7 +52,6 @@ Public Class Helper
             File.Move(sourceFilename, filename)
         End If
 
-
         If updateRecordingEntry = True Then
 
             'recording database path updaten
@@ -73,16 +72,14 @@ Public Class Helper
         'alle weiteren dateien kopieren z.B. *.xml, *.jpg, comskip files
         For Each Datei As String In My.Computer.FileSystem.GetFiles(_directory, FileIO.SearchOption.SearchTopLevelOnly, IO.Path.GetFileNameWithoutExtension(sourceFilename) & ".*")
 
-            Dim _newFilename As String = _recordsDirectory & "\" & Replace(Replace(Replace(Replace(_layer.GetSetting("seriesformat").Value, _
-                            "%title%", rec.Title), _
-                            "%series%", rec.SeriesNum), _
-                            "%episode%", rec.EpisodeNum), _
-                            "%name%", rec.EpisodeName) & IO.Path.GetExtension(Datei)
+            Dim _newFilename As String = Path.GetDirectoryName(filename) & "\" & Path.GetFileNameWithoutExtension(filename) & IO.Path.GetExtension(Datei)
 
             Try
-                MyLog.Debug("{0}move {1} file... ({2} -> {3})", LogPrefix, IO.Path.GetExtension(Datei), sourceFilename, filename)
-                If Helper.TestMode = False Then
-                    File.Move(Datei, _newFilename)
+                If Not Path.GetExtension(Datei) = ".ts" Then
+                    MyLog.Debug("{0}move {1} file... ({2} -> {3})", LogPrefix, IO.Path.GetExtension(Datei), Datei, _newFilename)
+                    If Helper.TestMode = False Then
+                        File.Move(Datei, _newFilename)
+                    End If
                 End If
             Catch exMoveOtherFiles As Exception
                 MyLog.Error("{0}error: {1}, stack: {2}", LogPrefix, exMoveOtherFiles.Message, exMoveOtherFiles.StackTrace)
@@ -113,9 +110,11 @@ Public Class Helper
         For Each Datei As String In My.Computer.FileSystem.GetFiles(_directory, FileIO.SearchOption.SearchTopLevelOnly, Path.GetFileNameWithoutExtension(filename) & ".*")
 
             Try
-                MyLog.Debug("existing file handler: delete {0} file... ({1})", Path.GetExtension(Datei), Datei)
-                If Helper.TestMode = False Then
-                    File.Delete(Datei)
+                If Not Path.GetExtension(Datei) = ".ts" Then
+                    MyLog.Debug("existing file handler: delete {0} file... ({1})", Path.GetExtension(Datei), Datei)
+                    If Helper.TestMode = False Then
+                        File.Delete(Datei)
+                    End If
                 End If
             Catch exDeleteOtherFiles As Exception
                 MyLog.Error("existing file handler: error: {0}, stack: {1}", exDeleteOtherFiles.Message, exDeleteOtherFiles.StackTrace)
