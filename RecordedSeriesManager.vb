@@ -32,6 +32,7 @@ Namespace TvEngine
         Private _isImporting As Boolean = False
         Private _counter As Integer = 0
         Private _lastNum As String = String.Empty
+
         'Private Const _timerIntervall As Long = 30000
 
 #End Region
@@ -53,7 +54,7 @@ Namespace TvEngine
         ''' </summary>
         Public ReadOnly Property Version() As String Implements ITvServerPlugin.Version
             Get
-                Return "0.7.1.6"
+                Return "0.7.1.7"
             End Get
         End Property
 
@@ -138,87 +139,85 @@ Namespace TvEngine
         Friend Sub CheckRecordingNeedsScan()
             Try
 
-                Dim _layer As New TvBusinessLayer
+                If _isImporting = False Then
 
-                _counter = 0
+                    Dim _layer As New TvBusinessLayer
 
-                _lastNum = _layer.GetSetting("RecordedSeriesManagerLastNum", "0").Value
+                    _counter = 0
 
-                'alle recordings mit Serien & EpisodenNr. laden, die nicht gerade aufgenommen werden
-                Dim sbRecording As New SqlBuilder(Gentle.Framework.StatementType.Select, GetType(Recording))
-                sbRecording.AddConstraint([Operator].GreaterThan, "seriesNum", "")
-                sbRecording.AddConstraint([Operator].GreaterThan, "episodeNum", "")
-                sbRecording.AddConstraint([Operator].Equals, "isRecording", 0)
-                Dim stmtRecording As SqlStatement = sbRecording.GetStatement(True)
-                Dim _SeriesFound As IList(Of Recording) = ObjectFactory.GetCollection(GetType(Recording), stmtRecording.Execute())
+                    _lastNum = _layer.GetSetting("RecordedSeriesManagerLastNum", "0").Value
 
-                'Prüfen ob ein neuer Scan laufen muss
-                If Not _SeriesFound.Count = CInt(_lastNum) Then
+                    'alle recordings mit Serien & EpisodenNr. laden, die nicht gerade aufgenommen werden
+                    Dim sbRecording As New SqlBuilder(Gentle.Framework.StatementType.Select, GetType(Recording))
+                    sbRecording.AddConstraint([Operator].GreaterThan, "seriesNum", "")
+                    sbRecording.AddConstraint([Operator].GreaterThan, "episodeNum", "")
+                    sbRecording.AddConstraint([Operator].Equals, "isRecording", 0)
+                    Dim stmtRecording As SqlStatement = sbRecording.GetStatement(True)
+                    Dim _SeriesFound As IList(Of Recording) = ObjectFactory.GetCollection(GetType(Recording), stmtRecording.Execute())
 
-                    MyLog.Debug("")
+                    'Prüfen ob ein neuer Scan laufen muss
+                    If Not _SeriesFound.Count = CInt(_lastNum) Then
 
-                    Helper.TestMode = CBool(_layer.GetSetting("RecordedSeriesManagerTestMode", "true").Value)
+                        _isImporting = True
 
-                    If Helper.TestMode = False Then
-                        MyLog.Debug("********** Start Scan **********")
-                    Else
-                        MyLog.Debug("********** Start Scan **********")
-                        MyLog.Debug("********** Test Mode! **********")
-                    End If
-
-                    MyLog.Debug("changes in recording found ({0} / {1})", _SeriesFound.Count, _lastNum)
-                    MyLog.Debug("recording folder: {0}", Helper.RecordingFolder)
-                    MyLog.Debug("scan interval: {0}s", CInt(_layer.GetSetting("RecordedSeriesManagerScanInterval", "30000").Value) / 1000)
-                    MyLog.Debug("series formating rule: {0}", _layer.GetSetting("seriesformat").Value)
-                    MyLog.Debug("existing file handler - percentage: {0} %", _layer.GetSetting("RecordedSeriesManagerPercentage", "20").Value)
-                    MyLog.Debug("existing file handler - keep moved files in TvServer records database: {0}", CBool(_layer.GetSetting("RecordedSeriesManagerKeepDataForMovedFiles", "false").Value))
-
-                    If _layer.GetSetting("RecordedSeriesManagerLessThanPercentage", "none").Value = "folder" Then
-                        MyLog.Debug("existing file handler - less than percentage: {0} - {1}", _layer.GetSetting("RecordedSeriesManagerLessThanPercentage", "none").Value, _layer.GetSetting("RecordedSeriesManagerLessThanPercentageFolder", "").Value)
-                    Else
-                        MyLog.Debug("existing file handler - less than percentage: {0}", _layer.GetSetting("RecordedSeriesManagerLessThanPercentage", "none").Value)
-                    End If
-                    If _layer.GetSetting("RecordedSeriesManagerGreaterThanPercentage", "none").Value = "folder" Then
-                        MyLog.Debug("existing file handler - Greater than percentage: {0} - {1}", _layer.GetSetting("RecordedSeriesManagerGreaterThanPercentage", "none").Value, _layer.GetSetting("RecordedSeriesManagerGreaterThanPercentageFolder", "").Value)
-                    Else
-                        MyLog.Debug("existing file handler - Greater than percentage: {0}", _layer.GetSetting("RecordedSeriesManagerGreaterThanPercentage", "none").Value)
-                    End If
-
-                    Try
-                        StartStopTimer(False)
-                    Catch exManualCalling As Exception
-                    End Try
-
-                    _lastNum = _SeriesFound.Count
-                    SetStandbyAllowed(False)
-
-                    ScanRecordings(_SeriesFound)
-
-                    If _counter > 0 Then
                         MyLog.Debug("")
-                        MyLog.Debug("Scan completly - {0} files moved", _counter)
-                    Else
+
+                        Helper.TestMode = CBool(_layer.GetSetting("RecordedSeriesManagerTestMode", "true").Value)
+
+                        If Helper.TestMode = False Then
+                            MyLog.Debug("********** Start Scan **********")
+                        Else
+                            MyLog.Debug("********** Start Scan **********")
+                            MyLog.Debug("********** Test Mode! **********")
+                        End If
+
+                        MyLog.Debug("changes in recording found ({0} / {1})", _SeriesFound.Count, _lastNum)
+                        MyLog.Debug("recording folder: {0}", Helper.RecordingFolder)
+                        MyLog.Debug("scan interval: {0}s", CInt(_layer.GetSetting("RecordedSeriesManagerScanInterval", "30000").Value) / 1000)
+                        MyLog.Debug("series formating rule: {0}", _layer.GetSetting("seriesformat").Value)
+                        MyLog.Debug("existing file handler - percentage: {0} %", _layer.GetSetting("RecordedSeriesManagerPercentage", "20").Value)
+                        MyLog.Debug("existing file handler - keep moved files in TvServer records database: {0}", CBool(_layer.GetSetting("RecordedSeriesManagerKeepDataForMovedFiles", "false").Value))
+
+                        If _layer.GetSetting("RecordedSeriesManagerLessThanPercentage", "none").Value = "folder" Then
+                            MyLog.Debug("existing file handler - less than percentage: {0} - {1}", _layer.GetSetting("RecordedSeriesManagerLessThanPercentage", "none").Value, _layer.GetSetting("RecordedSeriesManagerLessThanPercentageFolder", "").Value)
+                        Else
+                            MyLog.Debug("existing file handler - less than percentage: {0}", _layer.GetSetting("RecordedSeriesManagerLessThanPercentage", "none").Value)
+                        End If
+                        If _layer.GetSetting("RecordedSeriesManagerGreaterThanPercentage", "none").Value = "folder" Then
+                            MyLog.Debug("existing file handler - Greater than percentage: {0} - {1}", _layer.GetSetting("RecordedSeriesManagerGreaterThanPercentage", "none").Value, _layer.GetSetting("RecordedSeriesManagerGreaterThanPercentageFolder", "").Value)
+                        Else
+                            MyLog.Debug("existing file handler - Greater than percentage: {0}", _layer.GetSetting("RecordedSeriesManagerGreaterThanPercentage", "none").Value)
+                        End If
+
+                        _lastNum = _SeriesFound.Count
+
+                        SetStandbyAllowed(False)
+
+                        ScanRecordings(_SeriesFound)
+
+                        If _counter > 0 Then
+                            MyLog.Debug("")
+                            MyLog.Debug("Scan completly - {0} files moved", _counter)
+                        Else
+                            MyLog.Debug("")
+                            MyLog.Debug("Scan completly")
+                        End If
+
+                        'Standby erlauben & Trigger RecordedSeriesManagerLastNum speichern
+                        SetStandbyAllowed(True)
+
+                        Dim _setting As Setting = _layer.GetSetting("RecordedSeriesManagerLastNum", "0")
+                        _setting.Value = _lastNum
+                        _setting.Persist()
+
+                        _isImporting = False
+
                         MyLog.Debug("")
-                        MyLog.Debug("Scan completly - no new files found")
+                    Else
+                        MyLog.Debug("no changes in recording found")
                     End If
-
-                    'Standby erlauben & Trigger RecordedSeriesManagerLastNum speichern
-                    SetStandbyAllowed(True)
-
-                    Try
-                        StartStopTimer(False)
-                        MyLog.Debug("background timer started")
-                    Catch exManualCalling As Exception
-                    End Try
-
-
-                    Dim _setting As Setting = _layer.GetSetting("RecordedSeriesManagerLastNum", "0")
-                    _setting.Value = _lastNum
-                    _setting.Persist()
-
-                    MyLog.Debug("")
                 Else
-                    MyLog.Debug("no changes in recording found")
+                    MyLog.Debug("Scan still in progress....")
                 End If
 
             Catch ex As Exception

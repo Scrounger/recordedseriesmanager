@@ -81,6 +81,7 @@ Namespace SetupTv.Sections
 
             Dim _plugin As New TvEngine.RecordedSeriesManagerSetup
             Dim _layer As New TvBusinessLayer
+
             tbSeriesFormatingRule.Text = _layer.GetSetting("seriesformat").Value
             tbSample.Text = Replace(Replace(Replace(Replace(_layer.GetSetting("seriesformat").Value, _
                                                     "%title%", "Friends"), _
