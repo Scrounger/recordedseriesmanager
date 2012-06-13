@@ -222,7 +222,7 @@ The plugin offers additionally an existing file handler, where you can configure
     <VersionDescription>== Version 0.7.1.8 beta ==
   * MoveRecording wrong filename bug fixed</VersionDescription>
     <DevelopmentStatus>Beta</DevelopmentStatus>
-    <OnlineLocation>http://recordedseriesmanager.googlecode.com/files/RecordedSeriesManager_v.0.7.1.7.beta.mpe1</OnlineLocation>
+    <OnlineLocation>http://recordedseriesmanager.googlecode.com/files/RecordedSeriesManager_v.0.7.1.8.beta.mpe1</OnlineLocation>
     <ReleaseDate>2012-06-11T15:09:56.6977248+02:00</ReleaseDate>
     <Tags />
     <Location>D:\Projekte\RecordedSeriesManager\MPE1\RecordedSeriesManager.mpe1</Location>

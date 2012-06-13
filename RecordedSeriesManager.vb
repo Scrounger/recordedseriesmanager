@@ -54,7 +54,7 @@ Namespace TvEngine
         ''' </summary>
         Public ReadOnly Property Version() As String Implements ITvServerPlugin.Version
             Get
-                Return "0.7.1.8"
+                Return "0.7.1.9"
             End Get
         End Property
 
@@ -233,18 +233,22 @@ Namespace TvEngine
             For i = 0 To recordingList.Count - 1
 
                 '!!!!!!!! Replace muss raus !!!!
-                Dim _filenameDB As String = recordingList(i).FileName
+                Dim _filenameDB As String = Replace(recordingList(i).FileName, "D:\", "\\10.0.1.2\")
+
+                'Die zu ersetzenden Satzzeichen sind allesamt nach [\ angegeben und können beliebig erweitert werden.
+                Dim _title As String = System.Text.RegularExpressions.Regex.Replace(recordingList(i).Title, "[\<>?:|\/*]", "_")
+
 
 
                 If InStr(_filenameDB, Replace(Replace(Replace(Replace(_layer.GetSetting("seriesformat").Value, _
-                                            "%title%", recordingList(i).Title), _
+                                            "%title%", _title), _
                                             "%series%", recordingList(i).SeriesNum), _
                                             "%episode%", recordingList(i).EpisodeNum), _
                                             "%name%", recordingList(i).EpisodeName) & IO.Path.GetExtension(_filenameDB)) = 0 Then
 
                     MyLog.Debug("")
                     MyLog.Debug("wrong formating rule identified...")
-                    MyLog.Debug("title: {0} - S{1}E{2}", recordingList(i).Title)
+                    MyLog.Debug("title: {0} - S{1}E{2}", _title)
                     MyLog.Debug("filename: {0}", _filenameDB)
 
 
@@ -254,7 +258,7 @@ Namespace TvEngine
                     If IO.Directory.Exists(_directory) = True Then
 
                         Dim _newTsFilename As String = _recordsDirectory & "\" & Replace(Replace(Replace(Replace(_layer.GetSetting("seriesformat").Value, _
-                                            "%title%", recordingList(i).Title), _
+                                            "%title%", _title), _
                                             "%series%", recordingList(i).SeriesNum), _
                                             "%episode%", recordingList(i).EpisodeNum), _
                                             "%name%", recordingList(i).EpisodeName) & IO.Path.GetExtension(_filenameDB)
@@ -316,7 +320,7 @@ Namespace TvEngine
                                 Case Is = "folder"
 
                                     Dim _newMoveTsFilename As String = _MoveFolder & "\" & Replace(Replace(Replace(Replace(_layer.GetSetting("seriesformat").Value, _
-                                            "%title%", recordingList(i).Title), _
+                                            "%title%", _title), _
                                             "%series%", recordingList(i).SeriesNum), _
                                             "%episode%", recordingList(i).EpisodeNum), _
                                             "%name%", recordingList(i).EpisodeName) & IO.Path.GetExtension(_filenameDB)
@@ -327,7 +331,7 @@ Namespace TvEngine
                                         For d = 1 To 50
 
                                             Dim _testFilename As String = _MoveFolder & "\" & Replace(Replace(Replace(Replace(_layer.GetSetting("seriesformat").Value, _
-                                                                            "%title%", recordingList(i).Title), _
+                                                                            "%title%", _title), _
                                                                             "%series%", recordingList(i).SeriesNum), _
                                                                             "%episode%", recordingList(i).EpisodeNum), _
                                                                             "%name%", recordingList(i).EpisodeName) & _
