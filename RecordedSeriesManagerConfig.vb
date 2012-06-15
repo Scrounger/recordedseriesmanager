@@ -107,6 +107,12 @@ Namespace SetupTv.Sections
                 TPBtScan.Image = ic.ToBitmap
             End If
 
+            hIcon = ExtractIcon(Me.Handle, "%SystemRoot%\System32\imageres.dll", 76)
+            If hIcon <> 0 And hIcon <> 1 Then
+                Dim ic As Icon = Icon.FromHandle(hIcon)
+                PicInfo.BackgroundImage = ic.ToBitmap
+            End If
+
             Select Case (_layer.GetSetting("RecordedSeriesManagerLessThanPercentage", "none").Value)
                 Case Is = "none"
                     RbLessNone.Checked = True
@@ -328,6 +334,14 @@ Namespace SetupTv.Sections
             TPLabelTestMode.Visible = CheckTestMode.Checked
         End Sub
 
+        Private Sub Button1_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+            Dim bla2 As IList(Of Card) = Card.ListAll
+
+            'Dim bla As New TvServer
+            'MsgBox(bla.IsAnyCardRecordingOrTimeshifting(bla.GetUserForCard(0), True, True))
+
+
+        End Sub
     End Class
 End Namespace
 

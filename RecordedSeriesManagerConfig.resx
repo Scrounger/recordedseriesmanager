@@ -123,6 +123,9 @@
   <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>132, 17</value>
   </metadata>
+  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>132, 17</value>
+  </metadata>
   <data name="CheckTestMode.ToolTip" xml:space="preserve">
     <value>If test mode is activated, no recordings will be moved, deleted and no entry in the TvServer Database will be updated or deleted.
 In the *.log file you can read what the plugin would do with your recordings.
