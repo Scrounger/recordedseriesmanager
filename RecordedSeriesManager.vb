@@ -233,7 +233,7 @@ Namespace TvEngine
             For i = 0 To recordingList.Count - 1
 
                 '!!!!!!!! Replace muss raus !!!!
-                Dim _filenameDB As String = Replace(recordingList(i).FileName, "D:\", "\\10.0.1.2\")
+                Dim _filenameDB As String = recordingList(i).FileName
 
                 'Die zu ersetzenden Satzzeichen sind allesamt nach [\ angegeben und können beliebig erweitert werden.
                 Dim _title As String = System.Text.RegularExpressions.Regex.Replace(recordingList(i).Title, "[\<>?:|\/*]", "_")

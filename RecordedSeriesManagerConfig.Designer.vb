@@ -50,7 +50,6 @@ Namespace SetupTv.Sections
             Me.Label4 = New System.Windows.Forms.Label
             Me.Panel8 = New System.Windows.Forms.Panel
             Me.GroupBox3 = New System.Windows.Forms.GroupBox
-            Me.Button1 = New System.Windows.Forms.Button
             Me.Panel5 = New System.Windows.Forms.Panel
             Me.tbRecPath = New System.Windows.Forms.TextBox
             Me.Label5 = New System.Windows.Forms.Label
@@ -89,7 +88,6 @@ Namespace SetupTv.Sections
             Me.TPLabelVersion = New System.Windows.Forms.ToolStripLabel
             Me.TPLabelTestMode = New System.Windows.Forms.ToolStripLabel
             Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-            Me.PicInfo = New System.Windows.Forms.PictureBox
             Me.GroupBox1.SuspendLayout()
             Me.Panel3.SuspendLayout()
             Me.Panel2.SuspendLayout()
@@ -122,7 +120,6 @@ Namespace SetupTv.Sections
             Me.Panel10.SuspendLayout()
             CType(Me.NumPercentage, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.ToolStrip.SuspendLayout()
-            CType(Me.PicInfo, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'TvLogosList
@@ -249,10 +246,9 @@ Namespace SetupTv.Sections
             '
             'Panel11
             '
-            Me.Panel11.Controls.Add(Me.PicInfo)
             Me.Panel11.Controls.Add(Me.CheckTestMode)
             Me.Panel11.Dock = System.Windows.Forms.DockStyle.Top
-            Me.Panel11.Location = New System.Drawing.Point(10, 292)
+            Me.Panel11.Location = New System.Drawing.Point(10, 290)
             Me.Panel11.Name = "Panel11"
             Me.Panel11.Padding = New System.Windows.Forms.Padding(10)
             Me.Panel11.Size = New System.Drawing.Size(428, 39)
@@ -274,7 +270,7 @@ Namespace SetupTv.Sections
             '
             Me.Panel6.Controls.Add(Me.GroupBox1)
             Me.Panel6.Dock = System.Windows.Forms.DockStyle.Top
-            Me.Panel6.Location = New System.Drawing.Point(10, 154)
+            Me.Panel6.Location = New System.Drawing.Point(10, 152)
             Me.Panel6.Name = "Panel6"
             Me.Panel6.Padding = New System.Windows.Forms.Padding(4)
             Me.Panel6.Size = New System.Drawing.Size(428, 138)
@@ -284,7 +280,7 @@ Namespace SetupTv.Sections
             '
             Me.Panel7.Controls.Add(Me.GroupBox2)
             Me.Panel7.Dock = System.Windows.Forms.DockStyle.Top
-            Me.Panel7.Location = New System.Drawing.Point(10, 83)
+            Me.Panel7.Location = New System.Drawing.Point(10, 81)
             Me.Panel7.Name = "Panel7"
             Me.Panel7.Padding = New System.Windows.Forms.Padding(4)
             Me.Panel7.Size = New System.Drawing.Size(428, 71)
@@ -360,31 +356,21 @@ Namespace SetupTv.Sections
             Me.Panel8.Location = New System.Drawing.Point(10, 10)
             Me.Panel8.Name = "Panel8"
             Me.Panel8.Padding = New System.Windows.Forms.Padding(4)
-            Me.Panel8.Size = New System.Drawing.Size(428, 73)
+            Me.Panel8.Size = New System.Drawing.Size(428, 71)
             Me.Panel8.TabIndex = 9
             '
             'GroupBox3
             '
             Me.GroupBox3.AutoSize = True
-            Me.GroupBox3.Controls.Add(Me.Button1)
             Me.GroupBox3.Controls.Add(Me.Panel5)
             Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
             Me.GroupBox3.Location = New System.Drawing.Point(4, 4)
             Me.GroupBox3.Name = "GroupBox3"
             Me.GroupBox3.Padding = New System.Windows.Forms.Padding(5)
-            Me.GroupBox3.Size = New System.Drawing.Size(420, 65)
+            Me.GroupBox3.Size = New System.Drawing.Size(420, 63)
             Me.GroupBox3.TabIndex = 6
             Me.GroupBox3.TabStop = False
             Me.GroupBox3.Text = "Recording folder"
-            '
-            'Button1
-            '
-            Me.Button1.Location = New System.Drawing.Point(261, 18)
-            Me.Button1.Name = "Button1"
-            Me.Button1.Size = New System.Drawing.Size(104, 26)
-            Me.Button1.TabIndex = 3
-            Me.Button1.Text = "Button1"
-            Me.Button1.UseVisualStyleBackColor = True
             '
             'Panel5
             '
@@ -821,15 +807,6 @@ Namespace SetupTv.Sections
             Me.ToolTip1.UseAnimation = False
             Me.ToolTip1.UseFading = False
             '
-            'PicInfo
-            '
-            Me.PicInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-            Me.PicInfo.Location = New System.Drawing.Point(391, 6)
-            Me.PicInfo.Name = "PicInfo"
-            Me.PicInfo.Size = New System.Drawing.Size(24, 24)
-            Me.PicInfo.TabIndex = 1
-            Me.PicInfo.TabStop = False
-            '
             'RecordedSeriesManagerConfig
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -890,7 +867,6 @@ Namespace SetupTv.Sections
             CType(Me.NumPercentage, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ToolStrip.ResumeLayout(False)
             Me.ToolStrip.PerformLayout()
-            CType(Me.PicInfo, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub
@@ -954,7 +930,5 @@ Namespace SetupTv.Sections
         Friend WithEvents Panel11 As System.Windows.Forms.Panel
         Friend WithEvents CheckTestMode As System.Windows.Forms.CheckBox
         Friend WithEvents TPLabelTestMode As System.Windows.Forms.ToolStripLabel
-        Friend WithEvents Button1 As System.Windows.Forms.Button
-        Friend WithEvents PicInfo As System.Windows.Forms.PictureBox
     End Class
 End Namespace

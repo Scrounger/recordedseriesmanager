@@ -29,7 +29,7 @@ Public Class Helper
         Get
             '!!!!!!!! Replace muss raus !!!!
             Dim _folder As IList(Of Card) = Card.ListAll
-            Return Replace(_folder(0).RecordingFolder, "D:\", "\\10.0.1.2\")
+            Return _folder(0).RecordingFolder
 
         End Get
     End Property
